@@ -1,0 +1,113 @@
+import empresa.*
+import destinos.*
+import usuarios.*
+
+describe "contextoLastToninasConDescuento25%" {
+	fixture{
+		barrileteCosmico.aplicarDescuentoADestinos(0.25)
+	}
+
+	test "aplicarleUn25%DeDescuentoALastToninas"{
+		assert.equals(2625,lastToninas.getPrecio())
+	}
+	
+	test "verificarQueTengaCerticadoDeDescuento"{
+		assert.that(lastToninas.tieneElemento("Certificado de descuento"))
+	}
+}
+describe "contextoDeDestinos"{
+	
+	test "obtenerLosDestinosMasImportants" {
+		assert.equals(["Garlic's Sea","Last Toninas"],barrileteCosmico.obtenerLosDestinosMasImportantes())
+	}
+	
+	test "obtenerLosDestinosMasPeligrosos"{
+		assert.equals(["Last Toninas"], barrileteCosmico.conocerDestinosPeligrosos())
+	}
+}
+
+describe "contextoSilversSea"{
+	test "silversSeaEsDestinoPeligroso"{
+		assert.that(!silverSea.contieneVacunaEnEquipaje())
+	}
+}
+
+describe "contextoDeTodosLosDestinos"{
+	fixture{
+		barrileteCosmico.aplicarDescuentoADestinos(0.15)
+	}
+	
+	test "aplicarleUn15%DeDescuentoALastToninas"{
+		assert.equals(2975,lastToninas.getPrecio())
+	}
+	
+	test "verificarQueTengaCerticadoDeDescuentoLastToninas"{
+		assert.that(lastToninas.tieneElemento("Certificado de descuento"))
+	}
+	
+	test "aplicarleUn15%DeDescuentoAGarlicSea"{
+		assert.equals(2125,garlicSea.getPrecio())
+	}
+	
+	test "verificarQueTengaCerticadoDeDescuentoGarlicSea"{
+		assert.that(garlicSea.tieneElemento("Certificado de descuento"))
+	}
+	
+	test "aplicarleUn15%DeDescuentoASilversSea"{
+		assert.equals(1147.5,silverSea.getPrecio())
+	}
+	
+	test "verificarQueTengaCerticadoDeDescuentoSilverSea"{
+		assert.that(silverSea.tieneElemento("Certificado de descuento"))
+	}
+	
+	test "aplicarleUn15%DeDescuentoAGoodAirs"{
+		assert.equals(1275,goodAirs.getPrecio())
+	}
+	
+	test "verificarQueTengaCerticadoDeDescuentoGoodAirs"{
+		assert.that(goodAirs.tieneElemento("Certificado de descuento"))
+	}
+}
+
+describe "contextoDeBarrileteCosmico"{
+	
+	test "esUnaEmpresaExtrema"{
+		assert.that(barrileteCosmico.esExtrema())
+	}
+	
+	test "conocerLaCartaDeDestinos"{
+		assert.equals(["Garlic's Sea","Silver's Sea","Last Toninas","Good Airs"],barrileteCosmico.conocerCartaDeDestinos())
+	}
+}
+
+describe "contextoDePabloHari"{
+	
+	test "pabloTiene500millasRecorridas"{
+		assert.equals(500,pabloHari.millasRecorridas())
+	}
+	
+	test "pabloHariPuedeVolarASilverSea"{
+		assert.that(pabloHari.puedeVolarA(silverSea))
+	}
+
+}
+
+describe "contextoDePabloHariLuegoDeVolarASilverSea"{
+	
+	fixture{
+		pabloHari.volarAUnDestino(silverSea)
+	}
+	
+	test "pabloHariSilverSeaEsAgregadoEnSusDestinosConocidos"{
+		assert.that(pabloHari.getDestinosConocidos().contains(silverSea))
+	}
+	
+	test "pabloHariTiene150EnSuCuenta"{
+		assert.equals(150,pabloHari.getDinero())
+	}
+}
+
+
+
+
