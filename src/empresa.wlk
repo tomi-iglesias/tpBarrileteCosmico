@@ -1,27 +1,43 @@
-import destinos.*
+import localidades.*
+import Usuario.*
+import MedioDeTransporte.*
+import Viaje.*
 
 object barrileteCosmico {
 	
-	const destinos = [garlicSea, silverSea, lastToninas, goodAirs]
-		
-	method obtenerLosDestinosMasImportantes(){
-		return destinos.filter({destino => destino.esDestinoImportante()}).map({destino => destino.getNombre()})
+	const localidades = [garlicSea, silverSea, lastToninas, goodAirs]
+	const mediosDeTransporte = [1,2,3,4,5]
+	
+	method getMediosDeTransporte() = mediosDeTransporte
+	
+	method obtenerLasLocalidadesMasImportantes(){
+		return localidades.filter({localidad => localidad.esDestinoImportante()})
 	}
 	
-	method aplicarDescuentoADestinos(unPorcentaje){
-		destinos.forEach({destino => destino.aplicarDescuento(unPorcentaje)})
+	method aplicarDescuentoALocalidades(unPorcentaje){
+		localidades.forEach({localidad => localidad.aplicarDescuento(unPorcentaje)})
 	}
 	
 	method esExtrema(){
-		return destinos.any({destino => destino.contieneVacunaEnEquipaje()})
+		return localidades.any({localidad => localidad.esPeligroso()})
 	}
 	
-	method conocerCartaDeDestinos(){
-		return destinos.map({destino => destino.getNombre()})
+	method conocerCartaDeLocalidades(){
+		return localidades.map({localidad => localidad.getNombre()})
 	}
+	
+	method armarViaje(unUsuario, unaLocalidad, unMedioDeTransporte){  	
+  		return new Viaje(
+  			origen = unUsuario.getOrigen(),
+  			destino = unaLocalidad,
+  			medioDeTransporte = unMedioDeTransporte
+  		)
+  	}
 	
 	// metodo creado para test
-	method conocerDestinosPeligrosos(){
-		return destinos.filter({destino => destino.contieneVacunaEnEquipaje()}).map({destino => destino.getNombre()})
+	method conocerLocalidadesPeligrosas(){
+		return localidades.filter({localidad => localidad.esPeligroso()}).map({localidad => localidad.getNombre()})
 	}
+	
+	method getLocalidades() = localidades	
 }
