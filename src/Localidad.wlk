@@ -4,29 +4,29 @@ class Localidad {
 	var equipajeImprescindible
 	var kmDeUbicacion
 	
-	method getPrecio() = precio
+	method precio() = precio
 	
-	method getNombre() = nombre
+	method nombre() = nombre
 	
-	method getEquipajes() = equipajeImprescindible
+	method equipajes() = equipajeImprescindible
 	
-	method getUbicacion() = kmDeUbicacion
+	method ubicacion() = kmDeUbicacion
 	
-	method esDestinoImportante(){
-		return self.getPrecio() > 2000
+	method esDestacada(){
+		return self.precio() > 2000
 	}
 	
 	method aplicarDescuento(unPorcentaje){
-		precio -= self.getPrecio() * unPorcentaje
-		self.getEquipajes().add("Certificado de descuento")
+		precio -= self.precio() * unPorcentaje
+		self.equipajes().add("Certificado de descuento")
 	}
 	
-	method esPeligroso(){
-		return (self.getEquipajes().any({elemento => elemento.contains("Vacuna")}))
+	method esPeligrosa(){
+		return (self.equipajes().any({elemento => elemento.contains("Vacuna")}))
 	}
 	
 	method calcularDistanciaA(unaLocalidad){
-		var distancia = self.getUbicacion() - unaLocalidad.getUbicacion() 		
+		const distancia = self.ubicacion() - unaLocalidad.ubicacion() 		
 		if (distancia > 0){
 			return distancia
 		} else {
@@ -34,3 +34,64 @@ class Localidad {
 		}
 	}
 }
+
+class Playa inherits Localidad{
+	
+	override method esPeligrosa(){
+		return false
+	}
+}
+
+class Montania inherits Localidad {
+	var altura
+	
+	override method esDestacada(){
+		return true
+	}
+	
+	override method esPeligrosa(){
+		return (super() && altura > 5000)
+	}
+}
+
+class CiudadHistorica inherits Localidad{
+	var cantidadDeMuseos
+	
+	override method esDestacada(){
+		return (super() && cantidadDeMuseos >= 3)
+	}
+	
+	override method esPeligrosa(){
+		return (!self.equipajes().any({elemento => elemento.contains("Seguro de Asistencia al Viajero")}))
+	}
+}
+
+
+const garlicSea = new Localidad(
+	kmDeUbicacion = 114,
+	nombre = "Garlic's Sea",
+	precio = 2500,
+	equipajeImprescindible = ["Cania de pescar, Piloto"]
+) 
+	
+const silverSea = new Localidad(
+	kmDeUbicacion = 1114,
+	nombre = "Silver's Sea",
+	precio = 1350,
+	equipajeImprescindible = ["Protector solar", "Equipo de buceo"]
+)
+
+const lastToninas = new Localidad(
+	kmDeUbicacion = 444,
+	nombre = "Last Toninas",
+	precio = 3500,
+	equipajeImprescindible = ["Vacuna gripal", "Vacuna b", "Necronomicon"]
+)
+
+const goodAirs = new Localidad (
+	kmDeUbicacion = 0,
+	nombre = "Good Airs",
+	precio = 1500,
+	equipajeImprescindible = ["Cerveza", "Protector solar"]	
+)
+

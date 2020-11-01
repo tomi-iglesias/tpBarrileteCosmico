@@ -1,22 +1,29 @@
+import Perfiles.*
+import Viaje.*
+import Localidad.*
+
 class Usuario {
 	var usuario
 	var origen 
-	var viajesConocidos = []
+	var viajesConocidos 
 	var dineroEnCuenta
-	var listaDeSiguiendo = #{}
+	var listaDeSiguiendo
+	var perfil
 	
-	method getUsuario() = usuario
+	method perfil() = perfil
 	
-	method getDinero() = dineroEnCuenta
+	method usuario() = usuario
 	
-	method getSiguiendo() = listaDeSiguiendo
+	method dinero() = dineroEnCuenta
 	
-	method getViajesConocidos() = viajesConocidos
+	method siguiendo() = listaDeSiguiendo
 	
-	method getOrigen () = origen
+	method viajesConocidos() = viajesConocidos
+	
+	method origen () = origen
 	
 	method kilometrosRecorridos(){
-		return self.getViajesConocidos().sum({unViaje => unViaje.distanciaEntreLocalidades()})
+		return self.viajesConocidos().sum({unViaje => unViaje.distanciaEntreLocalidades()})
 	}
 	
 	method restarDinero(unValor){
@@ -27,12 +34,12 @@ class Usuario {
 		if (self.puedeViajarA(unViaje)){
 			viajesConocidos.add(unViaje)
 			self.restarDinero(unViaje.precio())
-			origen = unViaje.getDestino()
+			origen = unViaje.destino()
 		}
 	}
 	
 	method puedeViajarA(unViaje){
-		return (unViaje.precio() <= self.getDinero())
+		return (unViaje.precio() <= self.dinero())
 	}
 	
 	method seguirUsuario(unUsuario){
@@ -40,6 +47,16 @@ class Usuario {
 		unUsuario.seguirUsuario(self)
 	}
 	
-	
-	
+	method seleccionarMedioDeTransporte(mediosDeTransporte, unaDistancia){
+		return self.perfil().seleccionarMedioDeTransporte(mediosDeTransporte, unaDistancia,self.dinero())
+	}
 }
+
+const pabloHari = new Usuario(
+	origen = garlicSea,
+	usuario = "PHari",
+	viajesConocidos = [viajeALastToninas],
+	dineroEnCuenta = 20000,
+	listaDeSiguiendo = #{},
+	perfil = empresarial
+)

@@ -1,19 +1,34 @@
+import MedioDeTransporte.*
+import Localidad.*
+
 class Viaje {
 	var origen
 	var destino
 	var medioDeTransporte
 	
-	method getOrigen() = origen
+	method origen() = origen
 	
-	method getDestino() = destino
+	method destino() = destino
 	
-	method getMedioDeTransporte() = medioDeTransporte
+	method medioDeTransporte() = medioDeTransporte
 	
 	method distanciaEntreLocalidades(){
 		return origen.calcularDistanciaA(destino)
 	}
 	
 	method precio(){
-		return medioDeTransporte.precioPorDistancia(self.distanciaEntreLocalidades()) + destino.getPrecio()
+		return medioDeTransporte.precioPorDistancia(self.distanciaEntreLocalidades()) + destino.precio()
 	}
 }
+
+const viajeASilverSea = new Viaje(
+	origen = garlicSea,
+	destino = silverSea,
+	medioDeTransporte = avion
+)
+
+const viajeALastToninas = new Viaje(
+	origen = garlicSea,
+	destino = lastToninas,
+	medioDeTransporte = avion
+)

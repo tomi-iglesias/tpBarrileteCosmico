@@ -1,7 +1,8 @@
 import empresa.*
-import localidades.*
-import usuarios.*
-import viajes.*
+import Localidad.*
+import Usuario.*
+import Viaje.*
+
 
 describe "contextoLastToninasConDescuento25%" {
 	fixture{
@@ -9,11 +10,11 @@ describe "contextoLastToninasConDescuento25%" {
 	}
 
 	test "alAplicarleUn25%DeDescuentoALastToninasSuPrecioQuedaEn2625"{
-		assert.equals(2625,lastToninas.getPrecio())
+		assert.equals(2625,lastToninas.precio())
 	}
 	
 	test "verificarQueTengaCerticadoDeDescuento"{
-		assert.that(lastToninas.getEquipajes().contains("Certificado de descuento"))
+		assert.that(lastToninas.equipajes().contains("Certificado de descuento"))
 	}
 }
 describe "contextoDeDestinos"{
@@ -39,23 +40,23 @@ describe "contextoDeTodosLosDestinos"{
 	}
 	
 	test "aplicarleUn15%DeDescuentoALastToninas"{
-		assert.equals(2975,lastToninas.getPrecio())
+		assert.equals(2975,lastToninas.precio())
 	}
 	
 	test "verificarQueTodosLosDestinosTenganCerticadoDeDescuento"{
-		assert.that(barrileteCosmico.getLocalidades().any({destino => destino.getEquipajes().contains("Certificado de descuento")}))
+		assert.that(barrileteCosmico.localidades().any({destino => destino.equipajes().contains("Certificado de descuento")}))
 	}
 	
 	test "aplicarleUn15%DeDescuentoAGarlicSea"{
-		assert.equals(2125,garlicSea.getPrecio())
+		assert.equals(2125,garlicSea.precio())
 	}
 	
 	test "aplicarleUn15%DeDescuentoASilversSea"{
-		assert.equals(1147.5,silverSea.getPrecio())
+		assert.equals(1147.5,silverSea.precio())
 	}
 	
 	test "aplicarleUn15%DeDescuentoAGoodAirs"{
-		assert.equals(1275,goodAirs.getPrecio())
+		assert.equals(1275,goodAirs.precio())
 	}
 }
 
@@ -89,11 +90,11 @@ describe "contextoDePabloHariLuegoDeVolarASilverSea"{
 	}
 	
 	test "pabloHariSilverSeaEsAgregadoEnSusDestinosConocidos"{
-		assert.that(pabloHari.getViajesConocidos().contains(viajeASilverSea))
+		assert.that(pabloHari.viajesConocidos().contains(viajeASilverSea))
 	}
 	
 	test "pabloHariTiene8650EnSuCuenta"{
-		assert.equals(8650,pabloHari.getDinero())
+		assert.equals(8650,pabloHari.dinero())
 	}
 }
 
