@@ -7,7 +7,7 @@ class Usuario {
 	var origen 
 	var viajesConocidos 
 	var dineroEnCuenta
-	var listaDeSiguiendo
+	var property listaDeSiguiendo
 	var perfil
 	
 	method perfil() = perfil
@@ -43,8 +43,10 @@ class Usuario {
 	}
 	
 	method seguirUsuario(unUsuario){
+		if (!self.listaDeSiguiendo().contains(unUsuario)){
 		listaDeSiguiendo.add(unUsuario)
 		unUsuario.seguirUsuario(self)
+		}
 	}
 	
 	method seleccionarMedioDeTransporte(mediosDeTransporte, unaDistancia){
@@ -59,4 +61,22 @@ const pabloHari = new Usuario(
 	dineroEnCuenta = 20000,
 	listaDeSiguiendo = #{},
 	perfil = empresarial
+)
+
+const tomasIglesias = new Usuario(
+	usuario = "tomi-iglesias",
+	origen = marbella,
+	viajesConocidos = [],
+	dineroEnCuenta = 400000,
+	listaDeSiguiendo = #{},
+	perfil = empresarial
+)
+
+const sofiaCupolo = new Usuario(
+	usuario = "scupolo",
+	origen = lastToninas,
+	viajesConocidos = [],
+	dineroEnCuenta = 1000000,
+	listaDeSiguiendo = #{},
+	perfil = estudiantil
 )

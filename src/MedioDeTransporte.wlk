@@ -43,5 +43,5 @@ class Barco inherits MedioDeTransporte{
 
 const avion = new Avion(
 	velocidad = 800,
-	turbinas = [10,20,30]
+	turbinas = [2,5,5]
 )

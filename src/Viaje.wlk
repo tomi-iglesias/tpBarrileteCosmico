@@ -27,6 +27,12 @@ const viajeASilverSea = new Viaje(
 	medioDeTransporte = avion
 )
 
+const viajeAGoodAirs = new Viaje(
+	origen = marbella,
+	destino = goodAirs,
+	medioDeTransporte = avion
+)
+
 const viajeALastToninas = new Viaje(
 	origen = garlicSea,
 	destino = lastToninas,

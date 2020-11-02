@@ -17,8 +17,14 @@ class Localidad {
 	}
 	
 	method aplicarDescuento(unPorcentaje){
-		precio -= self.precio() * unPorcentaje
-		self.equipajes().add("Certificado de descuento")
+		if (unPorcentaje <1){
+			precio -= self.precio() * unPorcentaje
+			self.equipajes().add("Certificado de descuento")
+		}else {
+			precio = 0
+			self.equipajes().add("Certificado de descuento")
+		}
+		
 	}
 	
 	method esPeligrosa(){
@@ -27,11 +33,7 @@ class Localidad {
 	
 	method calcularDistanciaA(unaLocalidad){
 		const distancia = self.ubicacion() - unaLocalidad.ubicacion() 		
-		if (distancia > 0){
-			return distancia
-		} else {
-			return distancia * -1
-		}
+		return distancia.abs()
 	}
 }
 
@@ -93,5 +95,12 @@ const goodAirs = new Localidad (
 	nombre = "Good Airs",
 	precio = 1500,
 	equipajeImprescindible = ["Cerveza", "Protector solar"]	
+)
+
+const marbella = new Playa(
+	 nombre = "Marbella",
+	 precio = 15000,
+	 equipajeImprescindible = ["Protector Solar", "Traje De Banio", "Vacuna Covid-19", "Anteojos de Sol"],
+	 kmDeUbicacion = 2114
 )
 

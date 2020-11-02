@@ -2,102 +2,169 @@ import empresa.*
 import Localidad.*
 import Usuario.*
 import Viaje.*
+import MedioDeTransporte.*
+import Perfiles.*
 
-
-describe "contextoLastToninasConDescuento25%" {
+describe "Contexto Last Toninas Con Descuento 25%" {
 	fixture{
 		barrileteCosmico.aplicarDescuentoALocalidades(0.25)
 	}
 
-	test "alAplicarleUn25%DeDescuentoALastToninasSuPrecioQuedaEn2625"{
+	test "Al Aplicarle Un 25% DeDescuento A Last Toninas Su Precio Queda En 2625"{
 		assert.equals(2625,lastToninas.precio())
 	}
 	
-	test "verificarQueTengaCerticadoDeDescuento"{
+	test "Verificar Que Tenga Certicado De Descuento"{
 		assert.that(lastToninas.equipajes().contains("Certificado de descuento"))
 	}
 }
-describe "contextoDeDestinos"{
+describe "Contexto De Destinos"{
 	
-	test "obtenerLosDestinosMasImportantes" {
+	test "Otener Los Destinos Mas Importantes" {
 		assert.equals([garlicSea,lastToninas],barrileteCosmico.obtenerLasLocalidadesMasImportantes())
 	}
 	
-	test "obtenerLosDestinosMasPeligrosos"{
+	test "Obtener Los Destinos Mas Peligrosos"{
 		assert.equals(["Last Toninas"], barrileteCosmico.conocerLocalidadesPeligrosas())
 	}
 }
 
-describe "contextoSilversSea"{
-	test "silversSeaEsDestinoPeligroso"{
-		assert.that(!silverSea.esPeligroso())
+describe "Contexto Silvers Sea"{
+	test "Silvers Sea Es Destino Peligroso"{
+		assert.that(!silverSea.esPeligrosa())
 	}
 }
 
-describe "contextoDeTodosLosDestinos"{
+describe "Contexto De Todos Los Destinos"{
 	fixture{
 		barrileteCosmico.aplicarDescuentoALocalidades(0.15)
 	}
 	
-	test "aplicarleUn15%DeDescuentoALastToninas"{
+	test "aplicarle Un 15% De Descuento A Last Toninas"{
 		assert.equals(2975,lastToninas.precio())
 	}
 	
-	test "verificarQueTodosLosDestinosTenganCerticadoDeDescuento"{
+	test "verificar Que Todos Los Destinos Tengan Certicado De Descuento"{
 		assert.that(barrileteCosmico.localidades().any({destino => destino.equipajes().contains("Certificado de descuento")}))
 	}
 	
-	test "aplicarleUn15%DeDescuentoAGarlicSea"{
+	test "aplicarle Un 15% De Descuento A Garlic Sea"{
 		assert.equals(2125,garlicSea.precio())
 	}
 	
-	test "aplicarleUn15%DeDescuentoASilversSea"{
+	test "aplicarle Un 15% De Descuento A Silvers Sea"{
 		assert.equals(1147.5,silverSea.precio())
 	}
 	
-	test "aplicarleUn15%DeDescuentoAGoodAirs"{
+	test "aplicarle Un 15% De Descuento A GoodAirs"{
 		assert.equals(1275,goodAirs.precio())
 	}
 }
 
-describe "contextoDeBarrileteCosmico"{
+describe "contexto De Barrilete Cosmico"{
 	
-	test "esUnaEmpresaExtrema"{
+	test "es Una Empresa Extrema"{
 		assert.that(barrileteCosmico.esExtrema())
 	}
 	
-	test "conocerLaCartaDeDestinos"{
+	test "conocer La Carta De Destinos"{
 		assert.equals(["Garlic's Sea","Silver's Sea","Last Toninas","Good Airs"],barrileteCosmico.conocerCartaDeLocalidades())
 	}
 }
 
-describe "contextoDePabloHari"{
+describe "contexto De Pablo Hari"{
 	
-	test "pabloHariPuedeVolarASilverSea"{
+	test "pablo Hari Puede Volar A Silver Sea"{
 		assert.that(pabloHari.puedeViajarA(viajeASilverSea))
 	}
 
 }
 
-describe "contextoDePabloHariLuegoDeVolarASilverSea"{
+describe "contexto De Pablo Hari Luego De Volar A Silver Sea"{
 	
 	fixture{
 		pabloHari.realizarUnViaje(viajeASilverSea)
 	}
 	
-	test "pabloTiene1330kmsRecorridos"{
+	test "pablo Tiene 1330kms Recorridos"{
 		assert.equals(1330,pabloHari.kilometrosRecorridos())
 	}
 	
-	test "pabloHariSilverSeaEsAgregadoEnSusDestinosConocidos"{
+	test "pablo Hari Silver Sea Es Agregado En Sus Destinos Conocidos"{
 		assert.that(pabloHari.viajesConocidos().contains(viajeASilverSea))
 	}
 	
-	test "pabloHariTiene8650EnSuCuenta"{
-		assert.equals(8650,pabloHari.dinero())
+	test "pablo Hari Tiene 6650 En Su Cuenta"{
+		assert.equals(6650,pabloHari.dinero())
 	}
 }
 
+describe "Contexto medios de transporte"{
+	const elHolandesHerrante = new Barco (velocidad = 60,probabilidadDeChocar = 0.05)
+	const trenAHogwarts = new Tren(velocidad = 40)
+	const elSantiaguenio = new Micro(velocidad = 70)
+	const boeing = new Avion (velocidad = 700, turbinas = [2,2,4])
+	
+	test "El precio por kilometro del Holandes Errante es de $50" {
+		assert.equals(50,elHolandesHerrante.precioPorKm())
+	}
+	
+	test "El precio por kilometro del tren a Hogwarts es de $1437,5" {
+		assert.equals(1437.5,trenAHogwarts.precioPorKm())
+	}
+	
+	test "El costo por kilometro del boeing es de $8" {
+		assert.equals(8,boeing.precioPorKm())
+	}
+	
+	
+	test "El costo por kilometro del micro es 5000"{
+		assert.equals(5000,elSantiaguenio.precioPorKm())
+	}
+}
 
+describe "Contexto de Tomas Iglesias"{
+	
+	test "Tomas Iglesias puede viajar a Good Airs"{
+		assert.that(tomasIglesias.puedeViajarA(viajeAGoodAirs))
+	}
+	
+}	
+	
+describe "Tomas Iglesias luego de viajar a Good Airs"{
+	fixture{
+		tomasIglesias.realizarUnViaje(viajeAGoodAirs)
+	}
+	
+	
+	test "su localidad de origen no es peligrosa"{
+		assert.notThat(tomasIglesias.origen().esPeligrosa())
+	}
+	
+	test "Tomas Iglesias lo agrega como destino conocido"{
+		assert.that(tomasIglesias.viajesConocidos().contains(viajeAGoodAirs))
+	}
+	
+	test "Tomas Iglesias posee $373132 en su cuenta"{
+		assert.equals(373132,tomasIglesias.dinero())
+	}
+	
+	test "Tomas Iglesias Recorrio 2114 kilometros"{
+		assert.equals(2114,tomasIglesias.kilometrosRecorridos())
+	}
+}
 
+describe "Contexto de Sofia Cupolo luego de Seguir a Tomas Iglesias"{
+	fixture{
+		sofiaCupolo.seguirUsuario(tomasIglesias)
+	}
+	test "Sofia Cupolo tiene a tomasIglesias en su lista de Siguiendo"{
+		assert.that(sofiaCupolo.listaDeSiguiendo().contains(tomasIglesias))
+	}
+	test "Tomas Iglesias followbackea a Sofia Cupolo, por lo tanto la tiene en su lista de Siguiendo"{
+		assert.that(tomasIglesias.listaDeSiguiendo().contains(sofiaCupolo))
+	}
+}
+
+	
 
